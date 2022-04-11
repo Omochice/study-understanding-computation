@@ -1,3 +1,17 @@
+class Machine < Struct.new(:expression)
+  def step
+    self.expression = expression.reduce
+  end
+
+  def run
+    while expression.reducible?
+      puts expression
+      step
+    end
+    puts expression
+  end
+end
+
 class Number < Struct.new(:value)
   def to_s
     return value.to_s
@@ -60,14 +74,9 @@ class Multiply < Struct.new(:left, :right)
   end
 end
 
-expression =
+Machine.new(
   Add.new(
     Multiply.new(Number.new(1), Number.new(2)),
     Multiply.new(Number.new(3), Number.new(4)),
   )
-
-p expression.reducible?
-expression = expression.reduce
-expression = expression.reduce
-expression = expression.reduce
-p expression
+).run
