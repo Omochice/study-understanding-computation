@@ -26,12 +26,12 @@ class Add < Struct.new(:left, :right)
   end
 
   def reduce
-    if left.reducible
+    if left.reducible?
       return Add.new(left.reduce, right)
-    elsif right.reducible
+    elsif right.reducible?
       return Add.new(left, right.reduce)
     else
-      return Number.new(left + right)
+      return Number.new(left.value + right.value)
     end
   end
 end
@@ -50,12 +50,24 @@ class Multiply < Struct.new(:left, :right)
   end
 
   def reduce
-    if left.reducible
+    if left.reducible?
       return Multiply.new(left.reduce, right)
-    elsif right.reducible
+    elsif right.reducible?
       return Multiply.new(left, right.reduce)
     else
-      return Number.new(left * right)
+      return Number.new(left.value * right.value)
     end
   end
 end
+
+expression =
+  Add.new(
+    Multiply.new(Number.new(1), Number.new(2)),
+    Multiply.new(Number.new(3), Number.new(4)),
+  )
+
+p expression.reducible?
+expression = expression.reduce
+expression = expression.reduce
+expression = expression.reduce
+p expression
