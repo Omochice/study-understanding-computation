@@ -1,13 +1,29 @@
 class Number < Struct.new(:value)
+  def to_s
+    return value.to_s
+  end
+
+  def inspect
+    return "<<#{self}>>"
+  end
 end
 
 class Add < Struct.new(:left, :right)
+  def to_s
+    return "#{left} + #{right}"
+  end
+
+  def inspect
+    return "<<#{self}>>"
+  end
 end
 
 class Multiply < Struct.new(:left, :right)
-end
+  def to_s
+    return "#{left} * #{right}"
+  end
 
-p Add.new(
-  Multiply.new(Number.new(1), Number.new(2)),
-  Multiply.new(Number.new(3), Number.new(4)),
-)
+  def inspect
+    return "<<#{self}>>"
+  end
+end
