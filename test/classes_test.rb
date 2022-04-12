@@ -59,9 +59,10 @@ class AddTest < Minitest::Test
       r = rand(0..1000)
       left = Number.new(l)
       right = Number.new(r)
-      actual = Add.new(left, right).reduce
+      actual = Add.new(left, right).reduce({})
       assert_instance_of(Number, actual)
       assert_equal(Number.new(l + r), actual)
+      assert(!actual.reducible?)
     end
   end
 end
