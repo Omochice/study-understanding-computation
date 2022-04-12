@@ -138,3 +138,43 @@ class BooleanTest < Minitest::Test
     end
   end
 end
+
+class LessThanTest < Minitest::Test
+  def test_to_s
+    100.times do
+      l = rand(0..1000)
+      r = rand(0..1000)
+      actual = LessThan.new(Number.new(l), Number.new(r)).to_s
+      assert_equal("#{l} < #{r}", actual)
+    end
+  end
+
+  def test_inspect
+    100.times do
+      l = rand(0..1000)
+      r = rand(0..1000)
+      actual = LessThan.new(Number.new(l), Number.new(r)).inspect
+      assert_equal("<<#{l} < #{r}>>", actual)
+    end
+  end
+
+  def test_reducible
+    100.times do
+      l = rand(0..1000)
+      r = rand(0..1000)
+      actual = LessThan.new(Number.new(l), Number.new(r)).reducible?
+      assert(actual)
+    end
+  end
+
+  def test_reduce
+    100.times do
+      l = rand(0..1000)
+      r = rand(0..1000)
+      actual = LessThan.new(Number.new(l), Number.new(r)).reduce({})
+      assert_instance_of(Boolean, actual)
+      assert_equal(Boolean.new(l < r), actual)
+      assert(!actual.reducible?)
+    end
+  end
+end
