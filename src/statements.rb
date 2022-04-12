@@ -64,3 +64,45 @@ class If < Struct.new(:condition, :consequence, :alternative)
     end
   end
 end
+
+class Sequence < Struct.new(:first, :second)
+  def to_s
+    return "#{first} #{second}"
+  end
+
+  def inspect
+    return "<<#{self}>>"
+  end
+
+  def reducible?
+    return true
+  end
+
+  def reduce(environment = {})
+    case first
+    when DoNothing.new
+      return [second, environment]
+    else
+      reduced_first, reduced_environment = first.reduce(environment)
+      return [Sequence.new(reduced_first, second), reduced_environment]
+    end
+  end
+end
+
+class While < Struct.new(:condition, :body)
+  def to_s
+    return "while (#{condition}) { #{body} }"
+  end
+
+  def inspect
+    return "<<#{self}>>"
+  end
+
+  def reducible?
+    return true
+  end
+
+  def reduce(environment = {})
+    return [If.new(condition, Sequence.new(body, self), DoNothing.new), environment]
+  end
+end

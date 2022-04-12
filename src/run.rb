@@ -3,10 +3,9 @@ require_relative "./machine.rb"
 require_relative "./statements.rb"
 
 Machine.new(
-  If.new(
-    Variable.new(:x),
-    Assign.new(:y, Number.new(1)),
-    Assign.new(:y, Number.new(2))
+  While.new(
+    LessThan.new(Variable.new(:x), Number.new(5)),
+    Assign.new(:x, Multiply.new(Variable.new(:x), Number.new(3)))
   ),
-  { x: Boolean.new(true) }
+  { x: Number.new(1) },
 ).run
