@@ -33,7 +33,7 @@ class Assign < Struct.new(:name, :expression)
     if expression.reducible?
       return [Assign.new(name, expression.reduce(environment)), environment]
     else
-      return [DoNothing.new, environment.merge({ name: expression })]
+      return [DoNothing.new, environment.merge({ name => expression })]
     end
   end
 end
