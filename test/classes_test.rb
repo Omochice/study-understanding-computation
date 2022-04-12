@@ -114,3 +114,27 @@ class MultiplyTest < Minitest::Test
     end
   end
 end
+
+class BooleanTest < Minitest::Test
+  def test_to_s
+    t = Boolean.new(true)
+    f = Boolean.new(false)
+    assert_equal("true", t.to_s)
+    assert_equal("false", f.to_s)
+  end
+
+  def test_inspect
+    t = Boolean.new(true)
+    f = Boolean.new(false)
+    assert_equal("<<true>>", t.inspect)
+    assert_equal("<<false>>", f.inspect)
+  end
+
+  def test_reducible
+    t = Boolean.new(true)
+    f = Boolean.new(false)
+    [t, f].each do |v|
+      assert(!v.reducible?)
+    end
+  end
+end
