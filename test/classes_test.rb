@@ -59,7 +59,7 @@ class AddTest < Minitest::Test
       r = rand(0..1000)
       left = Number.new(l)
       right = Number.new(r)
-      actual = Add.new(left, right).reduce({})
+      actual = Add.new(left, right).reduce
       assert_instance_of(Number, actual)
       assert_equal(Number.new(l + r), actual)
       assert(!actual.reducible?)
@@ -107,7 +107,7 @@ class MultiplyTest < Minitest::Test
       r = rand(0..1000)
       left = Number.new(l)
       right = Number.new(r)
-      actual = Multiply.new(left, right).reduce({})
+      actual = Multiply.new(left, right).reduce
       assert_instance_of(Number, actual)
       assert_equal(Number.new(l * r), actual)
       assert(!actual.reducible?)
@@ -171,7 +171,7 @@ class LessThanTest < Minitest::Test
     100.times do
       l = rand(0..1000)
       r = rand(0..1000)
-      actual = LessThan.new(Number.new(l), Number.new(r)).reduce({})
+      actual = LessThan.new(Number.new(l), Number.new(r)).reduce
       assert_instance_of(Boolean, actual)
       assert_equal(Boolean.new(l < r), actual)
       assert(!actual.reducible?)
