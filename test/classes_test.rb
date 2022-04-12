@@ -62,7 +62,7 @@ class AddTest < Minitest::Test
       actual = Add.new(left, right).reduce
       assert_instance_of(Number, actual)
       assert_equal(Number.new(l + r), actual)
-      assert(!actual.reducible?)
+      refute(actual.reducible?)
     end
   end
 end
@@ -110,7 +110,7 @@ class MultiplyTest < Minitest::Test
       actual = Multiply.new(left, right).reduce
       assert_instance_of(Number, actual)
       assert_equal(Number.new(l * r), actual)
-      assert(!actual.reducible?)
+      refute(actual.reducible?)
     end
   end
 end
@@ -134,7 +134,7 @@ class BooleanTest < Minitest::Test
     t = Boolean.new(true)
     f = Boolean.new(false)
     [t, f].each do |v|
-      assert(!v.reducible?)
+      refute(v.reducible?)
     end
   end
 end
@@ -174,7 +174,7 @@ class LessThanTest < Minitest::Test
       actual = LessThan.new(Number.new(l), Number.new(r)).reduce
       assert_instance_of(Boolean, actual)
       assert_equal(Boolean.new(l < r), actual)
-      assert(!actual.reducible?)
+      refute(actual.reducible?)
     end
   end
 end
