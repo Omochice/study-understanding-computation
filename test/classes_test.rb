@@ -178,3 +178,31 @@ class LessThanTest < Minitest::Test
     end
   end
 end
+
+class VariableTest < Minitest::Test
+  def test_to_s
+    v = Variable.new(:x)
+    assert_equal("x", v.to_s)
+  end
+
+  def test_inspect
+    v = Variable.new(:x)
+    assert_equal("<<x>>", v.inspect)
+  end
+
+  def test_reducible
+    v = Variable.new(:x)
+    assert(v.reducible?)
+  end
+
+  def test_reduce
+    100.times do
+      v = Variable.new(:x)
+      expected = Number.new(rand(0..1000))
+      env = { x: expected }
+      actual = v.reduce(env)
+      assert_instance_of(expected.class, actual)
+      assert_equal(expected, actual)
+    end
+  end
+end
