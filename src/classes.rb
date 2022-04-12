@@ -84,7 +84,7 @@ class LessThan < Struct.new(:left, :right)
   end
 
   def reducible?
-    true
+    return true
   end
 
   def reduce(environment)
@@ -93,25 +93,25 @@ class LessThan < Struct.new(:left, :right)
     elsif right.reducible?
       return LessThan.new(left, right.reduce(environment))
     else
-      Boolean.new(left.value < right.value)
+      return Boolean.new(left.value < right.value)
     end
   end
 end
 
 class Variable < Struct.new(:name)
   def to_s
-    name.to_s
+    return name.to_s
   end
 
   def inspect
-    "<<#{self}>>"
+    return "<<#{self}>>"
   end
 
   def reducible?
-    true
+    return true
   end
 
   def reduce(environment)
-    environment[name]
+    return environment[name]
   end
 end
