@@ -4,7 +4,7 @@ class DoNothing
   end
 
   def inspect
-    return "<<#{self}"
+    return "<<#{self}>>"
   end
 
   def ==(other_statement)
