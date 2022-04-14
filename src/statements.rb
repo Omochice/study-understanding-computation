@@ -20,7 +20,7 @@ class DoNothing
   end
 
   def to_ruby
-    return "-> e { e }"
+    return "-> e { return e }"
   end
 end
 
@@ -50,7 +50,7 @@ class Assign < Struct.new(:name, :expression)
   end
 
   def to_ruby
-    return "-> e { e.merge({ #{name.inspect} => (#{expression.to_ruby}).call(e) }) }"
+    return "-> e { return e.merge({ #{name.inspect} => (#{expression.to_ruby}).call(e) }) }"
   end
 end
 
@@ -91,8 +91,8 @@ class If < Struct.new(:condition, :consequence, :alternative)
 
   def to_ruby
     return "-> { if (#{condition.to_ruby}).call(e)" +
-             " then (#{consequence.to_ruby}).call(e)" +
-             " else (#{alternative.to_ruby}).call(e)" +
+             " then return (#{consequence.to_ruby}).call(e)" +
+             " else return (#{alternative.to_ruby}).call(e)" +
              " end }"
   end
 end
@@ -125,7 +125,7 @@ class Sequence < Struct.new(:first, :second)
   end
 
   def to_ruby
-    return "-> e { (#{second.to_ruby}).call((#{first.to_ruby}).call(e)) }"
+    return "-> e { return (#{second.to_ruby}).call((#{first.to_ruby}).call(e)) }"
   end
 end
 
@@ -158,7 +158,7 @@ class While < Struct.new(:condition, :body)
   def to_ruby
     return "-> e {" +
              " while (#{condition.to_ruby}).call(e); e = (#{body.to_ruby}).call(e); end;" +
-             " e" +
+             " return e" +
              " }"
   end
 end

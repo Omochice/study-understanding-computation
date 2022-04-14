@@ -16,7 +16,7 @@ class Number < Struct.new(:value)
   end
 
   def to_ruby
-    return "-> e { #{value.inspect} }"
+    return "-> e { return #{value.inspect} }"
   end
 end
 
@@ -49,7 +49,7 @@ class Add < Struct.new(:left, :right)
   end
 
   def to_ruby
-    return "-> e { (#{left.to_ruby}).call(e) + (#{right.to_ruby}).call(e) }"
+    return "-> e { return (#{left.to_ruby}).call(e) + (#{right.to_ruby}).call(e) }"
   end
 end
 
@@ -82,7 +82,7 @@ class Multiply < Struct.new(:left, :right)
   end
 
   def to_ruby
-    return "-> e { (#{left.to_ruby}).call(e) * (#{right.to_ruby}).call(e) }"
+    return "-> e { return (#{left.to_ruby}).call(e) * (#{right.to_ruby}).call(e) }"
   end
 end
 
@@ -133,7 +133,7 @@ class LessThan < Struct.new(:left, :right)
   end
 
   def to_ruby
-    return "-> e { (#{left.to_ruby}).call(e) < (#{right.to_ruby}).call(e) }"
+    return "-> e { return (#{left.to_ruby}).call(e) < (#{right.to_ruby}).call(e) }"
   end
 end
 
@@ -159,6 +159,6 @@ class Variable < Struct.new(:name)
   end
 
   def to_ruby
-    return "-> e { e[#{name.inspect}] }"
+    return "-> e { return e[#{name.inspect}] }"
   end
 end
