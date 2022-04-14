@@ -82,7 +82,7 @@ class Multiply < Struct.new(:left, :right)
   end
 
   def to_ruby
-    "-> e { {#{left.to_ruby}}.call(e) * {#{right.to_ruby}}.call(e) }"
+    return "-> e { (#{left.to_ruby}).call(e) * (#{right.to_ruby}).call(e) }"
   end
 end
 
@@ -133,7 +133,7 @@ class LessThan < Struct.new(:left, :right)
   end
 
   def to_ruby
-    return "-> e { {#{left.to_ruby}}.call(e) < {#{right.to_ruby}}.call(e) }"
+    return "-> e { (#{left.to_ruby}).call(e) < (#{right.to_ruby}).call(e) }"
   end
 end
 
