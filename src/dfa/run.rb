@@ -20,3 +20,7 @@ p dfa.accepting?
 dfa.read_character("b")
 p dfa.accepting?
 
+dfa = DFA.new(1, [3], rulebook)
+dfa.accepting?
+dfa.read_string("baaaaab")
+dfa.accepting?
