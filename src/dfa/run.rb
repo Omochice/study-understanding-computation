@@ -6,7 +6,17 @@ rulebook = DFARuleBook.new([
   FARule.new(3, "a", 3), FARule.new(3, "b", 3),
 ])
 
-p rulebook
-p rulebook.next_state(1, "a")
-p rulebook.next_state(1, "b")
-p rulebook.next_state(2, "b")
+dfa = DFA.new(1, [3], rulebook)
+p dfa.accepting?
+
+dfa.read_character("b")
+p dfa.accepting?
+
+3.times do
+  dfa.read_character("a")
+end
+p dfa.accepting?
+
+dfa.read_character("b")
+p dfa.accepting?
+
