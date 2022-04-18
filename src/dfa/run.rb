@@ -6,21 +6,8 @@ rulebook = DFARuleBook.new([
   FARule.new(3, "a", 3), FARule.new(3, "b", 3),
 ])
 
-dfa = DFA.new(1, [3], rulebook)
-p dfa.accepting?
+dfa_design = DFADesign.new(1, [3], rulebook)
+p dfa_design.accepts?("a")
+p dfa_design.accepts?("baa")
+p dfa_design.accepts?("baba")
 
-dfa.read_character("b")
-p dfa.accepting?
-
-3.times do
-  dfa.read_character("a")
-end
-p dfa.accepting?
-
-dfa.read_character("b")
-p dfa.accepting?
-
-dfa = DFA.new(1, [3], rulebook)
-dfa.accepting?
-dfa.read_string("baaaaab")
-dfa.accepting?
