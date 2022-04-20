@@ -1,4 +1,4 @@
-require_relative "./farule.rb"
+require_relative "./dfa.rb"
 
 rulebook = DFARuleBook.new([
   FARule.new(1, "a", 2), FARule.new(1, "b", 1),
