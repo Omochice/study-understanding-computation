@@ -49,7 +49,7 @@ class NFADesign < Struct.new(:start_state, :accept_states, :rulebook)
     return to_nfa.tap { |nfa| nfa.read_string(string) }.accepting?
   end
 
-  def to_nfa
-    return NFA.new(Set[start_state], accept_states, rulebook)
+  def to_nfa(current_states = Set[start_state])
+    return NFA.new(current_states, accept_states, rulebook)
   end
 end
