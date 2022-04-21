@@ -1,5 +1,5 @@
 require "minitest/autorun"
-require_relative "../src/classes.rb"
+require_relative "../../src/classes.rb"
 
 class NumberTest < Minitest::Test
   def test_to_s
