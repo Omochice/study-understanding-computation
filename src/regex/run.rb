@@ -8,3 +8,5 @@ nfa_design = Literal.new("a").to_nfa_design
 p nfa_design.accepts?("")
 p nfa_design.accepts?("a")
 p nfa_design.accepts?("b")
+
+p Empty.new.matches?("")

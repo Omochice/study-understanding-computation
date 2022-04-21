@@ -13,6 +13,10 @@ module Pattern
   def inspect
     return "/#{self}/"
   end
+
+  def matches?(string)
+    return to_nfa_design.accepts?(string)
+  end
 end
 
 class Empty
