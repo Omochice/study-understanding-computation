@@ -1,7 +1,7 @@
 require "set"
 require_relative "./farule.rb"
 
-class NFARuleBook < Struct.new(:rules)
+class NFARulebook < Struct.new(:rules)
   def next_states(states, character)
     return states.flat_map { |state| follow_rules_for(state, character) }.to_set
   end
