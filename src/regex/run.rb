@@ -1,12 +1,16 @@
 require_relative "./pattern.rb"
 
-nfa_design = Empty.new.to_nfa_design
-p nfa_design.accepts?("")
-p nfa_design.accepts?("a")
+pattern = Concatenate.new(Literal.new("a"), Literal.new("b"))
+p pattern
+p pattern.matches?("a")
+p pattern.matches?("ab")
+p pattern.matches?("abc")
 
-nfa_design = Literal.new("a").to_nfa_design
-p nfa_design.accepts?("")
-p nfa_design.accepts?("a")
-p nfa_design.accepts?("b")
-
-p Empty.new.matches?("")
+pattern = Concatenate.new(
+  Concatenate.new(Literal.new("a"), Literal.new("b")),
+  Literal.new("c")
+)
+p pattern
+p pattern.matches?("a")
+p pattern.matches?("ab")
+p pattern.matches?("abc")

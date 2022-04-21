@@ -68,6 +68,21 @@ class Concatenate < Struct.new(:first, :second)
   def precedence
     return 1
   end
+
+  def to_nfa_design
+    first_nfa_design = first.to_nfa_design
+    second_nfa_design = second.to_nfa_design
+
+    start_state = first_nfa_design.start_state
+    accept_states = second_nfa_design.accept_states
+    rules = first_nfa_design.rulebook.rules + second_nfa_design.rulebook.rules
+    extra_rules = first_nfa_design.accept_states.map do |state|
+      FARule.new(state, nil, second_nfa_design.start_state)
+    end
+    rulebook = NFARulebook.new(rules + extra_rules)
+
+    return NFADesign.new(start_state, accept_states, rulebook)
+  end
 end
 
 class Choose < Struct.new(:first, :second)
