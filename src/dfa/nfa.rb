@@ -53,3 +53,11 @@ class NFADesign < Struct.new(:start_state, :accept_states, :rulebook)
     return NFA.new(current_states, accept_states, rulebook)
   end
 end
+
+class NFASimulation < Struct.new(:nfa_design)
+  def next_state(state, character)
+    return nfa_defitn.to_nfa(state).tap do |nfa|
+             nfa.read_character(character)
+           end.current_states
+  end
+end
