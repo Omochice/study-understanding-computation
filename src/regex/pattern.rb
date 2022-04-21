@@ -1,3 +1,6 @@
+require_relative "../dfa/nfa.rb"
+require_relative "../dfa/farule.rb"
+
 module Pattern
   def bracket(outer_precedence)
     if precedence < outer_precedence
@@ -22,6 +25,13 @@ class Empty
   def precedence
     return 3
   end
+
+  def to_nfa_design
+    start_state = Object.new
+    accept_states = [start_state]
+    rulebook = NFARulebook.new([])
+    return NFADesign.new(start_state, accept_states, rulebook)
+  end
 end
 
 class Literal < Struct.new(:character)
@@ -33,6 +43,14 @@ class Literal < Struct.new(:character)
 
   def precedence
     return 3
+  end
+
+  def to_nfa_design
+    start_state = Object.new
+    accept_state = Object.new
+    rule = FARule.new(start_state, character, accept_state)
+    rulebook = NFARulebook.new([rule])
+    return NFADesign.new(start_state, [accept_state], rulebook)
   end
 end
 
