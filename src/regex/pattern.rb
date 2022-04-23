@@ -1,5 +1,5 @@
-require_relative "../dfa/nfa.rb"
-require_relative "../dfa/farule.rb"
+require_relative "../finite-automaton/nfa.rb"
+require_relative "../finite-automaton/farule.rb"
 
 module Pattern
   def bracket(outer_precedence)
