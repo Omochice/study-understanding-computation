@@ -1,3 +1,6 @@
+require_relative "./stack.rb"
+require_relative "./pushdown-automaton-rule.rb"
+
 class DPDARulebook < Struct.new(:rules)
   def next_configuration(configuration, character)
     return rule_for(configuration, character).follow(configuration)
@@ -37,5 +40,18 @@ class DPDA < Struct.new(:current_configuration, :accept_states, :rulebook)
 
   def current_configuration
     return rulebook.follow_free_moves(super)
+  end
+end
+
+class DPDADesign < Struct.new(:start_state, :bottom_character,
+                              :accept_states, :rulebook)
+  def accepts?(string)
+    to_dpda.tap { |dpda| dpda.read_string(string) }.accepting?
+  end
+
+  def to_dpda
+    start_stack = Stack.new([bottom_character])
+    start_configuration = PDAConfiguration.new(start_state, start_stack)
+    return DPDA.new(start_configuration, accept_states, rulebook)
   end
 end
