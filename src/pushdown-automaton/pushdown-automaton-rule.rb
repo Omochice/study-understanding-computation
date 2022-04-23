@@ -1,4 +1,13 @@
 class PDAConfiguration < Struct.new(:state, :stack)
+  STUCK_STATE = Object.new()
+
+  def stuck
+    return PDAConfiguration.new(STUCK_STATE, stack)
+  end
+
+  def stuck?
+    return state == STUCK_STATE
+  end
 end
 
 class PDARule < Struct.new(:state, :character, :next_state,

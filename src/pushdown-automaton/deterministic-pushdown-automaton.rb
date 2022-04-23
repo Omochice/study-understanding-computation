@@ -29,17 +29,29 @@ class DPDA < Struct.new(:current_configuration, :accept_states, :rulebook)
   end
 
   def read_character(character)
-    self.current_configuration = rulebook.next_configuration(current_configuration, character)
+    self.current_configuration = next_configuration(character)
   end
 
   def read_string(string)
     string.chars.each do |character|
-      read_character(character)
+      read_character(character) unless stuck?
     end
   end
 
   def current_configuration
     return rulebook.follow_free_moves(super)
+  end
+
+  def next_configuration(character)
+    if rulebook.applies_to?(current_configuration, character)
+      return rulebook.next_configuration(current_configuration, character)
+    else
+      return current_configuration.stuck
+    end
+  end
+
+  def stuck?
+    return current_configuration.stuck?
   end
 end
 
