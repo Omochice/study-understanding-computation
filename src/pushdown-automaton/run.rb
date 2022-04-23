@@ -1,8 +1,10 @@
 require_relative "./stack.rb"
+require_relative "./pushdown-automaton-rule.rb"
 
-p stack = Stack.new("abcde".split(""))
-p stack.top
-p stack.pop.pop.top
-p stack.push("x").push("y").top
-p stack.push("x").push("y").pop.top
+rule = PDARule.new(1, "(", 2, "$", ["b", "$"])
+p rule
+configuration = PDAConfiguration.new(1, Stack.new(["$"]))
+p configuration
+p rule.applies_to?(configuration, "(")
 
+p rule.follow(configuration)
