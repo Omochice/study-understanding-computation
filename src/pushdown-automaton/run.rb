@@ -9,9 +9,8 @@ rulebook = DPDARulebook.new([
   PDARule.new(2, nil, 1, "$", ["$"]),
 ])
 
-p dpda = DPDA.new(PDAConfiguration.new(1, Stack.new(["$"])), [1], rulebook)
-p dpda.accepting?
+dpda = DPDA.new(PDAConfiguration.new(1, Stack.new(["$"])), [1], rulebook)
 
-dpda.read_string("(()")
-p dpda.accepting?
-p dpda.current_configuration
+p dpda
+# p dpda.read_string("(()(")
+# p dpda.accepting?
