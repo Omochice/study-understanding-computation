@@ -1,20 +1,32 @@
 require_relative "./stack.rb"
 require_relative "./pushdown-automaton-rule.rb"
 require_relative "./deterministic-pushdown-automaton.rb"
+require_relative "./non-deterministic-pushdown-automaton-rule.rb"
 
-rulebook = DPDARulebook.new([
-  PDARule.new(1, "(", 2, "$", ["b", "$"]),
-  PDARule.new(2, "(", 2, "b", ["b", "b"]),
-  PDARule.new(2, ")", 2, "b", []),
-  PDARule.new(2, nil, 1, "$", ["$"]),
+rulebook = NPDARulebook.new([
+  PDARule.new(1, "a", 1, "$", ["a", "$"]),
+  PDARule.new(1, "a", 1, "a", ["a", "a"]),
+  PDARule.new(1, "a", 1, "b", ["a", "b"]),
+  PDARule.new(1, "b", 1, "$", ["b", "$"]),
+  PDARule.new(1, "b", 1, "a", ["b", "a"]),
+  PDARule.new(1, "b", 1, "b", ["b", "b"]),
+  PDARule.new(1, nil, 2, "$", ["$"]),
+  PDARule.new(1, nil, 2, "a", ["a"]),
+  PDARule.new(1, nil, 2, "b", ["b"]),
+  PDARule.new(2, "a", 2, "a", []),
+  PDARule.new(2, "b", 2, "b", []),
+  PDARule.new(2, nil, 3, "$", ["$"]),
 ])
 
-dpda = DPDA.new(PDAConfiguration.new(1, Stack.new(["$"])), [1], rulebook)
-dpda.read_string("())")
-p dpda.current_configuration
+configuration = PDAConfiguration.new(1, Stack.new(["$"]))
+npda = NPDA.new(Set[configuration], [3], rulebook)
+p npda.accepting?
+p npda.current_configurations
 
-p dpda.accepting?
-p dpda.stuck?
+npda.read_string("abb")
+p npda.accepting?
 
-dpda_design = DPDADesign.new(1, "$", [1], rulebook)
-p dpda_design.accepts?("())")
+npda.read_string("a")
+p npda.accepting?
+
+
