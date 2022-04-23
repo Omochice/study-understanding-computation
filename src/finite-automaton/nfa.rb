@@ -1,5 +1,6 @@
 require "set"
 require_relative "./farule.rb"
+require_relative "./dfa.rb"
 
 class NFARulebook < Struct.new(:rules)
   def next_states(states, character)
@@ -21,6 +22,10 @@ class NFARulebook < Struct.new(:rules)
     else
       return follow_free_moves(states + more_states)
     end
+  end
+
+  def alphabet
+    return rules.map(&:character).compact.uniq
   end
 end
 
@@ -55,9 +60,32 @@ class NFADesign < Struct.new(:start_state, :accept_states, :rulebook)
 end
 
 class NFASimulation < Struct.new(:nfa_design)
-  def next_state(state, character)
-    return nfa_defitn.to_nfa(state).tap do |nfa|
+  def next_states(state, character)
+    return nfa_design.to_nfa(state).tap do |nfa|
              nfa.read_character(character)
            end.current_states
+  end
+
+  def rules_for(state)
+    return nfa_design.rulebook.alphabet.map do |character|
+             FARule.new(state, character, next_states(state, character))
+           end
+  end
+
+  def discover_states_and_rules(states)
+    rules = states.flat_map { |state| rules_for(state) }
+    more_states = rules.map(&:follow).to_set
+    if more_states.subset?(states)
+      return [states, rules]
+    else
+      return discover_states_and_rules(states + more_states)
+    end
+  end
+
+  def to_dfa_design
+    start_state = nfa_design.to_nfa.current_states
+    states, rules = discover_states_and_rules(Set[start_state])
+    accept_states = states.select { |state| nfa_design.to_nfa(state).accepting? }
+    return DFADesign.new(start_state, accept_states, DFARuleBook.new(rules))
   end
 end

@@ -8,10 +8,18 @@ rulebook = NFARulebook.new([
 ])
 
 nfa_design = NFADesign.new(1, [3], rulebook)
-# p nfa_design.to_nfa.current_states
-# p nfa_design.to_nfa(Set[2]).current_states
-# p nfa_design.to_nfa(Set[3]).current_states
 
-nfa = nfa_design.to_nfa(Set[2,3])
-nfa.read_character("b")
-p nfa.current_states
+simulation = NFASimulation.new(nfa_design)
+
+# p rulebook.alphabet
+# p simulation.rules_for(Set[1, 2])
+# p start_state = nfa_design.to_nfa.current_states
+# p simulation.discover_states_and_rules(Set[start_state])
+
+# p nfa_design.to_nfa(Set[1, 2]).accepting?
+# p nfa_design.to_nfa(Set[2, 3]).accepting?
+
+p dfa_design = simulation.to_dfa_design
+p dfa_design.accepts?("aaa")
+p dfa_design.accepts?("aab")
+p dfa_design.accepts?("bbbabb")
