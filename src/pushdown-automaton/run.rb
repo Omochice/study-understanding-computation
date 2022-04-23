@@ -18,15 +18,20 @@ rulebook = NPDARulebook.new([
   PDARule.new(2, nil, 3, "$", ["$"]),
 ])
 
-configuration = PDAConfiguration.new(1, Stack.new(["$"]))
-npda = NPDA.new(Set[configuration], [3], rulebook)
-p npda.accepting?
-p npda.current_configurations
+npda_design = NPDADesign.new(1, "$", [3], rulebook)
+p npda_design.accepts?("abba")
+p npda_design.accepts?("abab")
+p npda_design.accepts?("aba") # this accepts only string that its length is even
 
-npda.read_string("abb")
-p npda.accepting?
-
-npda.read_string("a")
-p npda.accepting?
-
-
+# configuration = PDAConfiguration.new(1, Stack.new(["$"]))
+# npda = NPDA.new(Set[configuration], [3], rulebook)
+# p npda.accepting?
+# p npda.current_configurations
+#
+# npda.read_string("abb")
+# p npda.accepting?
+#
+# npda.read_string("a")
+# p npda.accepting?
+#
+#

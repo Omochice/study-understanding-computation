@@ -1,4 +1,6 @@
 require "set"
+require_relative "./stack.rb"
+require_relative "./pushdown-automaton-rule.rb"
 
 class NPDARulebook < Struct.new(:rules)
   def next_configurations(configurations, character)
@@ -42,5 +44,18 @@ class NPDA < Struct.new(:current_configurations, :accept_states, :rulebook)
 
   def current_configurations
     return rulebook.follow_free_moves(super)
+  end
+end
+
+class NPDADesign < Struct.new(:start_state, :bottom_character,
+                              :accept_states, :rulebook)
+  def accepts?(string)
+    return to_npda.tap { |npda| npda.read_string(string) }.accepting?
+  end
+
+  def to_npda
+    start_stack = Stack.new([bottom_character])
+    start_configuration = PDAConfiguration.new(start_state, start_stack)
+    return NPDA.new(Set[start_configuration], accept_states, rulebook)
   end
 end
