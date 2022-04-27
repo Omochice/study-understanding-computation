@@ -35,7 +35,7 @@ end
 class DTMTest < Minitest::Test
   def setup
     tape = Tape.new(["1", "0", "1"], "1", [], "_")
-    rulebook = DTMRulebook.new([
+    @rulebook = DTMRulebook.new([
       TMRule.new(1, "0", 2, "1", :right),
       TMRule.new(1, "1", 1, "0", :left),
       TMRule.new(1, "_", 2, "1", :right),
@@ -43,7 +43,7 @@ class DTMTest < Minitest::Test
       TMRule.new(2, "1", 2, "1", :right),
       TMRule.new(2, "_", 3, "_", :left),
     ])
-    @dtm = DTM.new(TMConfiguration.new(1, tape), [3], rulebook)
+    @dtm = DTM.new(TMConfiguration.new(1, tape), [3], @rulebook)
   end
 
   def test_step
@@ -66,5 +66,13 @@ class DTMTest < Minitest::Test
     refute @dtm.accepting?
     @dtm.run
     assert @dtm.accepting?
+  end
+
+  def test_stuck?
+    dtm = DTM.new(TMConfiguration.new(1, Tape.new(["1", "2", "1"], "1", [], "_")),
+                  [3], @rulebook)
+    assert dtm.run.nil?
+    refute dtm.accepting?
+    assert dtm.stuck?
   end
 end
