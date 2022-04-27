@@ -1,6 +1,6 @@
 class Tape < Struct.new(:left, :middle, :right, :blank)
   def inspect
-    return "<Tape #{left.join} #{middle.join} #{right.join}>"
+    return "<Tape #{left.join}(#{middle})#{right.join}>"
   end
 
   def write(character)
