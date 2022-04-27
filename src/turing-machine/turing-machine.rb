@@ -15,10 +15,9 @@ class TMRule < Struct.new(:state, :character, :next_state, :write_character, :di
     written_tape = configuration.tape.write(self.write_character)
     case direction
     when :left
-      written_tape.move_head_left
+      return written_tape.move_head_left
     when :right
-      written_tape.move_head_right
+      return written_tape.move_head_right
     end
-    return written_tape
   end
 end
