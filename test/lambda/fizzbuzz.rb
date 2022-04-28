@@ -59,4 +59,14 @@ class OperatorTest < Minitest::Test
     assert_equal(2, to_integer(INCREMENT[ONE]))
     assert_equal(101, to_integer(INCREMENT[HANDRED]))
   end
+
+  def test_decrement
+    assert_equal(0, to_integer(DECREMENT[ONE]))
+    assert_equal(1, to_integer(DECREMENT[TWO]))
+    # Negative number is not defined.
+    # so, the test below will be failed
+    # puts to_integer(DECREMENT[ZERO])
+    # assert_equal(-1, to_integer(DECREMENT[ZERO]))
+    assert_equal(0, to_integer(DECREMENT[ZERO]))
+  end
 end
