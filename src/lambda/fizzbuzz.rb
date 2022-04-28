@@ -23,7 +23,7 @@ def to_integer(proc)
 end
 
 def to_boolean(proc)
-  return proc[true][false]
+  return IF[proc][true][false]
 end
 
 def if(proc, x, y)
