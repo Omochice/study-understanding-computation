@@ -16,6 +16,8 @@ PAIR = ->x { ->y { ->f { f[x][y] } } }
 LEFT = ->p { p[->x { ->y { x } }] }
 RIGHT = ->p { p[->x { ->y { y } }] }
 
+INCREMENT = ->n { ->p { ->x { p[n[p][x]] } } }
+
 def to_integer(proc)
   return proc[->n { n + 1 }][0]
 end

@@ -52,3 +52,11 @@ class StatementTest < Minitest::Test
     assert_equal(5, to_integer(RIGHT[pair]))
   end
 end
+
+class OperatorTest
+  def test_increment
+    assert_equal(1, INCREMENT[ZERO])
+    assert_equal(2, INCREMENT[ONE])
+    assert_equal(101, INCREMENT[HANDRED])
+  end
+end
