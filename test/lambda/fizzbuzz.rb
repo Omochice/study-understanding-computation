@@ -38,4 +38,11 @@ class StatementTest < Minitest::Test
     assert_equal("expected", IF[TRUE]["expected"]["not expected"])
     assert_equal("expected", IF[FALSE]["not expected"]["expected"])
   end
+
+  def test_is_zero
+    assert to_boolean(IS_ZERO[ZERO])
+    refute to_boolean(IS_ZERO[ONE])
+    refute to_boolean(IS_ZERO[TWO])
+    refute to_boolean(IS_ZERO[THREE])
+  end
 end
