@@ -9,14 +9,7 @@ HANDRED = ->p { ->x { p[p[p[p[p[p[p[p[p[p[p[p[p[p[p[p[p[p[p[p[p[p[p[p[p[p[p[p[p[
 TRUE = ->x { ->y { x } }
 FALSE = ->x { ->y { y } }
 
-IF =
-  ->b {
-    ->x {
-      ->y {
-        b[x][y]
-      }
-    }
-  }
+IF = ->b { b }
 
 def to_integer(proc)
   return proc[->n { n + 1 }][0]
