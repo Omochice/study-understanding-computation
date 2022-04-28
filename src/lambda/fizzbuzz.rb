@@ -1,18 +1,7 @@
-def one(proc, x)
-  return proc[x]
-end
-
-def two(proc, x)
-  return proc[proc[x]]
-end
-
-def three(proc, x)
-  return proc[proc[proc[x]]]
-end
-
-def zero(proc, x)
-  return x
-end
+ZERO = ->p { ->x { x } }
+ONE = ->p { ->x { p[x] } }
+TWO = ->p { ->x { p[p[x]] } }
+THREE = ->p { ->x { p[p[p[x]]] } }
 
 if $0 == __FILE__
   (1..100).map do |n|
