@@ -22,3 +22,20 @@ class ConstantTest < Minitest::Test
     assert_equal(100, to_integer(HANDRED))
   end
 end
+
+class BooleanTest < Minitest::Test
+  def test_true
+    assert to_boolean(TRUE)
+  end
+
+  def test_false
+    refute to_boolean(FALSE)
+  end
+end
+
+class StatementTest < Minitest::Test
+  def test_if
+    assert_equal("expected", IF[TRUE]["expected"]["not expected"])
+    assert_equal("expected", IF[FALSE]["not expected"]["expected"])
+  end
+end
