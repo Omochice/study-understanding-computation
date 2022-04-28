@@ -12,6 +12,10 @@ FALSE = ->x { ->y { y } }
 IF = ->b { b }
 IS_ZERO = ->n { n[->x { FALSE }][TRUE] }
 
+PAIR = ->x { ->y { ->f { f[x][y] } } }
+LEFT = ->p { p[->x { ->y { x } }] }
+RIGHT = ->p { p[->x { ->y { y } }] }
+
 def to_integer(proc)
   return proc[->n { n + 1 }][0]
 end

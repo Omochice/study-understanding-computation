@@ -45,4 +45,10 @@ class StatementTest < Minitest::Test
     refute to_boolean(IS_ZERO[TWO])
     refute to_boolean(IS_ZERO[THREE])
   end
+
+  def test_pair
+    pair = PAIR[THREE][FIVE]
+    assert_equal(3, to_integer(LEFT[pair]))
+    assert_equal(5, to_integer(RIGHT[pair]))
+  end
 end
