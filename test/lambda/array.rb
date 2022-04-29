@@ -29,6 +29,20 @@ class ArrayTest < Minitest::Test
     assert_equal(3, to_integer(FIRST[REST[REST[@list]]]))
   end
 
+  def test_countdown
+    start = 15
+    pair = PAIR[EMPTY][FIFTEEN]
+    expected = []
+    start.times do |i|
+      expected = [start - i] + expected
+      pair = COUNTDOWN[pair]
+      assert_equal(expected,
+                   to_array(LEFT[pair]).map { |e| to_integer(e) })
+      assert_equal(start - i - 1,
+                   to_integer(RIGHT[pair]))
+    end
+  end
+
   def test_range
     assert_equal((1..5).to_a, to_array(RANGE[ONE][FIVE]).map { |e| to_integer(e) })
     assert_equal((5..1).to_a, to_array(RANGE[FIVE][ONE]).map { |e| to_integer(e) })

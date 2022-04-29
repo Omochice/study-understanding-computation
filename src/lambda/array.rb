@@ -28,6 +28,7 @@ RANGE = Z[->f {
               }
             }
           }]
+COUNTDOWN = ->p { PAIR[UNSHIFT[LEFT[p]][RIGHT[p]]][DECREMENT[RIGHT[p]]] }
 # FOLD that like Enumerate#inject
 FOLD = Z[
   ->f {
