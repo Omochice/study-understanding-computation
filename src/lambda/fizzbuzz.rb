@@ -56,6 +56,19 @@ UNSHIFT = ->l {
 IS_EMPTY = LEFT
 FIRST = ->l { LEFT[RIGHT[l]] }
 REST = ->l { RIGHT[RIGHT[l]] }
+RANGE = Z[->f {
+            ->m {
+              ->n {
+                IF[IS_LESS_OR_EQUAL[m][n]][
+                  ->x {
+                    UNSHIFT[f[INCREMENT[m]][n]][m][x]
+                  }
+                ][
+                  EMPTY
+                ]
+              }
+            }
+          }]
 
 def to_integer(proc)
   return proc[->n { n + 1 }][0]

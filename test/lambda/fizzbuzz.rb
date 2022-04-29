@@ -137,4 +137,9 @@ class ListTest < Minitest::Test
     assert_equal(2, to_integer(FIRST[REST[@list]]))
     assert_equal(3, to_integer(FIRST[REST[REST[@list]]]))
   end
+
+  def test_range
+    assert_equal((1..5).to_a, to_array(RANGE[ONE][FIVE]).map { |e| to_integer(e) })
+    assert_equal((5..1).to_a, to_array(RANGE[FIVE][ONE]).map { |e| to_integer(e) })
+  end
 end
