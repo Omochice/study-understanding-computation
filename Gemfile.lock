@@ -1,0 +1,17 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    minitest (5.15.0)
+    rake (13.0.6)
+    rufo (0.13.0)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  minitest (~> 5.15)
+  rake (~> 13.0)
+  rufo (~> 0.13.0)
+
+BUNDLED WITH
+   2.2.22
