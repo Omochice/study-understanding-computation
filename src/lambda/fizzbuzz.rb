@@ -107,6 +107,7 @@ MAP = ->k {
     ]
   }
 }
+PUSH = ->l { ->x { FOLD[l][UNSHIFT[EMPTY][x]][UNSHIFT] } }
 
 B = MULTIPLY[TWO][FIVE]
 F = INCREMENT[B]

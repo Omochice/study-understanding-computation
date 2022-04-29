@@ -162,6 +162,11 @@ class ListTest < Minitest::Test
     assert_equal((0..5).map { |e| e + 1 },
                  to_array(MAP[RANGE[ZERO][FIVE]][INCREMENT]).map { |e| to_integer(e) })
   end
+
+  def test_push
+    assert_equal([1, 2, 3].push(1),
+                 to_array(PUSH[@list][ONE]).map { |e| to_integer(e) })
+  end
 end
 
 class StringTest < Minitest::Test
