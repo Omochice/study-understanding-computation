@@ -21,14 +21,14 @@ class Stream < Minitest::Test
   end
 
   def test_multiples_of
-    assert((2...2 + 10).map { |e| e * 2 },
-           to_array(MULTIPLES_OF[TWO], 10).map { |e| to_integer(e) })
-    assert((5...5 + 20).map { |e| e * 2 },
-           to_array(MULTIPLES_OF[FIVE], 20).map { |e| to_integer(e) })
+    assert_equal((1...1 + 10).map { |e| e * 2 },
+                 to_array(MULTIPLES_OF[TWO], 10).map { |e| to_integer(e) })
+    assert_equal((1...1 + 20).map { |e| e * 5 },
+                 to_array(MULTIPLES_OF[FIVE], 20).map { |e| to_integer(e) })
     # map procs
-    assert((3..3 + 10).map { |e| e * 2 + 1 },
-           to_array(MAP[MULTIPLES_OF[THREE]][INCREMENT], 10).map { |e| to_integer(e) })
-    assert((3..3 + 10).map { |e| e * 2 * 2 },
-           to_array(MAP[MULTIPLES_OF[THREE]][MULTIPLY[TWO]], 10).map { |e| to_integer(e) })
+    assert_equal((1...1 + 10).map { |e| e * 3 + 1 },
+                 to_array(MAP[MULTIPLES_OF[THREE]][INCREMENT], 10).map { |e| to_integer(e) })
+    assert_equal((1...1 + 10).map { |e| e * 3 * 2 },
+                 to_array(MAP[MULTIPLES_OF[THREE]][MULTIPLY[TWO]], 10).map { |e| to_integer(e) })
   end
 end
