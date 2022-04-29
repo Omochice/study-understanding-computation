@@ -104,6 +104,7 @@ class OperatorTest < Minitest::Test
     # normal
     assert_equal(2, to_integer(MOD[FIVE][THREE]))
     assert_equal(0, to_integer(MOD[FIVE][FIVE]))
+    assert_equal(5, to_integer(MOD[FIVE][FIFTEEN]))
   end
 
   def test_power
