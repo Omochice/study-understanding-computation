@@ -28,6 +28,15 @@ DECREMENT = ->n { LEFT[n[SLIDE][PAIR[ZERO][ZERO]]] }
 ADD = ->m { ->n { n[INCREMENT][m] } }
 SUBSTRACT = ->m { ->n { n[DECREMENT][m] } }
 MULTIPLY = ->m { ->n { n[ADD[m]][ZERO] } }
+MOD = ->m {
+  ->n {
+    IF[IS_LESS_OR_EQUAL[n][m]][
+      MOD[SUBSTRACT[m][n]][n]
+    ][
+      m
+    ]
+  }
+}
 POWER = ->m { ->n { n[MULTIPLY[m]][ONE] } }
 
 def to_integer(proc)

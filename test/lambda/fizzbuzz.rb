@@ -100,6 +100,12 @@ class OperatorTest < Minitest::Test
                  to_integer(MULTIPLY[THREE][TWO]))
   end
 
+  def test_mod
+    # normal
+    assert_equal(2, to_integer(MOD[FIVE][THREE]))
+    assert_equal(0, to_integer(MOD[FIVE][FIVE]))
+  end
+
   def test_power
     # normal
     assert_equal(8, to_integer(POWER[TWO][THREE]))
