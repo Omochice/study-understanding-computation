@@ -15,20 +15,21 @@ UNSHIFT = ->l {
 IS_EMPTY = LEFT
 FIRST = ->l { LEFT[RIGHT[l]] }
 REST = ->l { RIGHT[RIGHT[l]] }
-RANGE = Z[->f {
-            ->m {
-              ->n {
-                IF[IS_LESS_OR_EQUAL[m][n]][
-                  ->x {
-                    UNSHIFT[f[INCREMENT[m]][n]][m][x]
-                  }
-                ][
-                  EMPTY
-                ]
-              }
-            }
-          }]
 COUNTDOWN = ->p { PAIR[UNSHIFT[LEFT[p]][RIGHT[p]]][DECREMENT[RIGHT[p]]] }
+RANGE = ->m { ->n { LEFT[INCREMENT[SUBSTRACT[n][m]][COUNTDOWN][PAIR[EMPTY][n]]] } }
+# RANGE = Z[->f {
+#             ->m {
+#               ->n {
+#                 IF[IS_LESS_OR_EQUAL[m][n]][
+#                   ->x {
+#                     UNSHIFT[f[INCREMENT[m]][n]][m][x]
+#                   }
+#                 ][
+#                   EMPTY
+#                 ]
+#               }
+#             }
+#           }]
 # FOLD that like Enumerate#inject
 FOLD = Z[
   ->f {
