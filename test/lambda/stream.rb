@@ -31,4 +31,10 @@ class Stream < Minitest::Test
     assert_equal((1...1 + 10).map { |e| e * 3 * 2 },
                  to_array(MAP[MULTIPLES_OF[THREE]][MULTIPLY[TWO]], 10).map { |e| to_integer(e) })
   end
+
+  def test_multiply_stream
+    assert_equal((1...1 + 10).zip((1..1 + 10).map { |e| e * 3 }).map { |x, y| x * y },
+                 to_array(MULTIPLY_STREAMS[UPWARDS_OF[ONE]][MULTIPLES_OF[THREE]], 10)
+      .map { |e| to_integer(e) })
+  end
 end
