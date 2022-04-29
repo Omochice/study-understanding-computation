@@ -42,6 +42,12 @@ MOD = ->m {
 }
 POWER = ->m { ->n { n[MULTIPLY[m]][ONE] } }
 
+Y = ->f {
+  ->x {
+    f[x[x]]
+  }[->x { f[x[x]] }]
+}
+
 def to_integer(proc)
   return proc[->n { n + 1 }][0]
 end
