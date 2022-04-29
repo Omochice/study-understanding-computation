@@ -153,3 +153,15 @@ class ListTest < Minitest::Test
                  to_array(MAP[RANGE[ZERO][FIVE]][INCREMENT]).map { |e| to_integer(e) })
   end
 end
+
+class StringTest < Minitest::Test
+  def test_to_char
+    assert_equal("z", to_char(ZED))
+  end
+
+  def test_to_string
+    assert_equal("Fizz", to_string(FIZZ))
+    assert_equal("Buzz", to_string(BUZZ))
+    assert_equal("FizzBuzz", to_string(FIZZBUZZ))
+  end
+end

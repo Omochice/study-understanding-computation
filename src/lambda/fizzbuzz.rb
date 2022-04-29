@@ -95,6 +95,17 @@ MAP = ->k {
   }
 }
 
+B = MULTIPLY[TWO][FIVE]
+F = INCREMENT[B]
+I = INCREMENT[F]
+U = INCREMENT[I]
+ZED = INCREMENT[U]
+
+FIZZ = UNSHIFT[UNSHIFT[UNSHIFT[UNSHIFT[EMPTY][ZED]][ZED]][I]][F]
+BUZZ = UNSHIFT[UNSHIFT[UNSHIFT[UNSHIFT[EMPTY][ZED]][ZED]][U]][B]
+# FIZZBUZZ = UNSHIFT[UNSHIFT[EMPTY][BUZZ]][FIZZ] # This does not work
+FIZZBUZZ = UNSHIFT[UNSHIFT[UNSHIFT[UNSHIFT[BUZZ][ZED]][ZED]][I]][F]
+
 def to_integer(proc)
   return proc[->n { n + 1 }][0]
 end
@@ -110,6 +121,14 @@ def to_array(proc)
     proc = REST[proc]
   end
   return array
+end
+
+def to_char(c)
+  return "0123456789BFiuz".slice(to_integer(c))
+end
+
+def to_string(s)
+  return to_array(s).map { |c| to_char(c) }.join
 end
 
 if $0 == __FILE__
