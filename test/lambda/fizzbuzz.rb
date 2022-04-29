@@ -118,3 +118,23 @@ class OperatorTest < Minitest::Test
     assert_equal(1, to_integer(POWER[THREE][ZERO]))
   end
 end
+
+class ListTest < Minitest::Test
+  def setup
+    @list = UNSHIFT[
+      UNSHIFT[
+        UNSHIFT[EMPTY][THREE]
+      ][TWO]
+    ][ONE]
+  end
+
+  def test_to_array
+    assert_equal([1, 2, 3], to_array(@list).map { |e| to_integer(e) })
+  end
+
+  def test_first
+    assert_equal(1, to_integer(FIRST[@list]))
+    assert_equal(2, to_integer(FIRST[REST[@list]]))
+    assert_equal(3, to_integer(FIRST[REST[REST[@list]]]))
+  end
+end

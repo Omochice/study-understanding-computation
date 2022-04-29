@@ -47,6 +47,16 @@ MOD = Z[->f {
         }]
 POWER = ->m { ->n { n[MULTIPLY[m]][ONE] } }
 
+EMPTY = PAIR[TRUE][TRUE]
+UNSHIFT = ->l {
+  ->x {
+    PAIR[FALSE][PAIR[x][l]]
+  }
+}
+IS_EMPTY = LEFT
+FIRST = ->l { LEFT[RIGHT[l]] }
+REST = ->l { RIGHT[RIGHT[l]] }
+
 def to_integer(proc)
   return proc[->n { n + 1 }][0]
 end
@@ -55,6 +65,13 @@ def to_boolean(proc)
   return IF[proc][true][false]
 end
 
+def to_array(proc)
+  array = []
+  until to_boolean(IS_EMPTY[proc])
+    array.push(FIRST[proc])
+    proc = REST[proc]
+  end
+  return array
 end
 
 if $0 == __FILE__
