@@ -147,4 +147,9 @@ class ListTest < Minitest::Test
     assert_equal((1..5).inject(0, :+), to_integer(FOLD[RANGE[ONE][FIVE]][ZERO][ADD]))
     assert_equal((1..5).inject(0, :*), to_integer(FOLD[RANGE[ONE][FIVE]][ZERO][MULTIPLY]))
   end
+
+  def test_map
+    assert_equal((0..5).map { |e| e + 1 },
+                 to_array(MAP[RANGE[ZERO][FIVE]][INCREMENT]).map { |e| to_integer(e) })
+  end
 end
