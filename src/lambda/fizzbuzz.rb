@@ -31,7 +31,10 @@ MULTIPLY = ->m { ->n { n[ADD[m]][ZERO] } }
 MOD = ->m {
   ->n {
     IF[IS_LESS_OR_EQUAL[n][m]][
-      MOD[SUBSTRACT[m][n]][n]
+      ->x {
+        # lazy ecaluation by dummy proc
+        MOD[SUBSTRACT[m][n]][n][x]
+      }
     ][
       m
     ]
