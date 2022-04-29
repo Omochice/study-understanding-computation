@@ -69,6 +69,24 @@ RANGE = Z[->f {
               }
             }
           }]
+# FOLD that like Enumerate#inject
+FOLD = Z[
+  ->f {
+    ->l {
+      ->x {
+        ->g {
+          IF[IS_EMPTY[l]][
+            x
+          ][
+            ->y {
+              g[f[REST[l]][x][g]][FIRST[l]][y]
+            }
+          ]
+        }
+      }
+    }
+  }
+]
 
 def to_integer(proc)
   return proc[->n { n + 1 }][0]

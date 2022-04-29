@@ -142,4 +142,9 @@ class ListTest < Minitest::Test
     assert_equal((1..5).to_a, to_array(RANGE[ONE][FIVE]).map { |e| to_integer(e) })
     assert_equal((5..1).to_a, to_array(RANGE[FIVE][ONE]).map { |e| to_integer(e) })
   end
+
+  def test_fold
+    assert_equal((1..5).inject(0, :+), to_integer(FOLD[RANGE[ONE][FIVE]][ZERO][ADD]))
+    assert_equal((1..5).inject(0, :*), to_integer(FOLD[RANGE[ONE][FIVE]][ZERO][MULTIPLY]))
+  end
 end
