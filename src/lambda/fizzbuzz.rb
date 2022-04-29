@@ -120,6 +120,20 @@ BUZZ = UNSHIFT[UNSHIFT[UNSHIFT[UNSHIFT[EMPTY][ZED]][ZED]][U]][B]
 # FIZZBUZZ = UNSHIFT[UNSHIFT[EMPTY][BUZZ]][FIZZ] # This does not work
 FIZZBUZZ = UNSHIFT[UNSHIFT[UNSHIFT[UNSHIFT[BUZZ][ZED]][ZED]][I]][F]
 
+TO_DIGITS = Z[->f {
+                ->n {
+                  PUSH[
+                    IF[IS_LESS_OR_EQUAL[n][DECREMENT[MULTIPLY[TWO][FIVE]]]][
+                      EMPTY
+                    ][
+                      ->x {
+                        f[DIV[n][MULTIPLY[TWO][FIVE]]][x]
+                      }
+                    ]
+                  ][MOD[n][MULTIPLY[TWO][FIVE]]]
+                }
+              }]
+
 def to_integer(proc)
   return proc[->n { n + 1 }][0]
 end

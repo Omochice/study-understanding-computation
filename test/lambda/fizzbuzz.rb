@@ -179,4 +179,11 @@ class StringTest < Minitest::Test
     assert_equal("Buzz", to_string(BUZZ))
     assert_equal("FizzBuzz", to_string(FIZZBUZZ))
   end
+
+  def test_to_digits
+    assert_equal([5],
+                 to_array(TO_DIGITS[FIVE]).map { |e| to_integer(e) })
+    assert_equal((5 ** 3).to_s.split("").map(&:to_i),
+                 to_array(TO_DIGITS[POWER[FIVE][THREE]]).map { |e| to_integer(e) })
+  end
 end
