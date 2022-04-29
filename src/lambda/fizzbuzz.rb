@@ -48,6 +48,12 @@ Y = ->f {
   }[->x { f[x[x]] }]
 }
 
+Z = ->f {
+  ->x { f[->y { x[x][y] }] }[
+    ->x { f[->y { x[x][y] }] }
+  ]
+}
+
 def to_integer(proc)
   return proc[->n { n + 1 }][0]
 end
