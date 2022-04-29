@@ -1,3 +1,6 @@
+Y = ->f { ->x { f[x[x]] }[->x { f[x[x]] }] }
+Z = ->f { ->x { f[->y { x[x][y] }] }[->x { f[->y { x[x][y] }] }] }
+
 ZERO = ->p { ->x { x } }
 ONE = ->p { ->x { p[x] } }
 TWO = ->p { ->x { p[p[x]] } }
@@ -42,17 +45,6 @@ MOD = ->m {
 }
 POWER = ->m { ->n { n[MULTIPLY[m]][ONE] } }
 
-Y = ->f {
-  ->x {
-    f[x[x]]
-  }[->x { f[x[x]] }]
-}
-
-Z = ->f {
-  ->x { f[->y { x[x][y] }] }[
-    ->x { f[->y { x[x][y] }] }
-  ]
-}
 
 def to_integer(proc)
   return proc[->n { n + 1 }][0]
