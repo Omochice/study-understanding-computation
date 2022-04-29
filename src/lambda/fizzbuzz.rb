@@ -11,6 +11,11 @@ FALSE = ->x { ->y { y } }
 
 IF = ->b { b }
 IS_ZERO = ->n { n[->x { FALSE }][TRUE] }
+IS_LESS_OR_EQUAL = ->m {
+  ->n {
+    IS_ZERO[SUBSTRACT[m][n]]
+  }
+}
 
 PAIR = ->x { ->y { ->f { f[x][y] } } }
 LEFT = ->p { p[->x { ->y { x } }] }

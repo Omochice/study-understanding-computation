@@ -51,6 +51,12 @@ class StatementTest < Minitest::Test
     assert_equal(3, to_integer(LEFT[pair]))
     assert_equal(5, to_integer(RIGHT[pair]))
   end
+
+  def test_is_less_or_equal
+    refute to_boolean(IS_LESS_OR_EQUAL[TWO][ONE])
+    assert to_boolean(IS_LESS_OR_EQUAL[TWO][TWO])
+    assert to_boolean(IS_LESS_OR_EQUAL[TWO][THREE])
+  end
 end
 
 class OperatorTest < Minitest::Test
