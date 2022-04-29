@@ -55,8 +55,6 @@ def to_boolean(proc)
   return IF[proc][true][false]
 end
 
-def if(proc, x, y)
-  return proc[x][y]
 end
 
 if $0 == __FILE__
