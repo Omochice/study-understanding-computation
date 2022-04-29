@@ -23,18 +23,29 @@ DIV = Z[->f {
             }
           }
         }]
-MOD = Z[->f {
-          ->m {
-            ->n {
-              IF[IS_LESS_OR_EQUAL[n][m][
-                   ->x {
-                     f[SUBSTRACT[m][n]][n][x]
-                   }
-                 ][
-                   m
-                 ]
-              ]
-            }
-          }
-        }]
+MOD = ->m {
+  ->n {
+    m[->x {
+        IF[IS_LESS_OR_EQUAL[n][x]][
+          SUBSTRACT[x][n]
+        ][
+          x
+        ]
+      }][m]
+  }
+}
+# MOD = Z[->f {
+#           ->m {
+#             ->n {
+#               IF[IS_LESS_OR_EQUAL[n][m][
+#                    ->x {
+#                      f[SUBSTRACT[m][n]][n][x]
+#                    }
+#                  ][
+#                    m
+#                  ]
+#               ]
+#             }
+#           }
+#         }]
 POWER = ->m { ->n { n[MULTIPLY[m]][ONE] } }
