@@ -159,6 +159,20 @@ def to_string(s)
   return to_array(s).map { |c| to_char(c) }.join
 end
 
-if $0 == __FILE__
-  puts to_integer()
-end
+SOLUTION =
+  MAP[RANGE[ONE][HANDRED]][->n {
+                             IF[IS_ZERO[MOD[n][FIFTEEN]]][
+                               FIZZBUZZ
+                             ][
+                               IF[IS_ZERO[MOD[n][THREE]]][
+                                 FIZZ
+                               ][
+                                 IF[IS_ZERO[MOD[n][FIVE]]][
+                                   BUZZ
+                                 ][
+                                   TO_DIGITS[n]
+                                 ]
+                               ]
+                             ]
+                           }]
+
