@@ -100,6 +100,16 @@ class OperatorTest < Minitest::Test
                  to_integer(MULTIPLY[THREE][TWO]))
   end
 
+  def test_to_div
+    assert_equal(1, to_integer(DIV[FIVE][FIVE]))
+    # 0 / Num = 0
+    assert_equal(0, to_integer(DIV[ZERO][FIVE]))
+    # num / 0 = NaN(raise error)
+    assert_raises(SystemStackError) { to_integer(DIV[ONE][ZERO]) }
+    # 0 / 0 = what??
+    assert_raises(SystemStackError) { to_integer(DIV[ZERO][ZERO]) }
+  end
+
   def test_mod
     # normal
     assert_equal(2, to_integer(MOD[FIVE][THREE]))

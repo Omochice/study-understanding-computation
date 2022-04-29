@@ -31,6 +31,19 @@ DECREMENT = ->n { LEFT[n[SLIDE][PAIR[ZERO][ZERO]]] }
 ADD = ->m { ->n { n[INCREMENT][m] } }
 SUBSTRACT = ->m { ->n { n[DECREMENT][m] } }
 MULTIPLY = ->m { ->n { n[ADD[m]][ZERO] } }
+DIV = Z[->f {
+          ->m {
+            ->n {
+              IF[IS_LESS_OR_EQUAL[n][m]][
+                ->x {
+                  INCREMENT[f[SUBSTRACT[m][n]][n]][x]
+                }
+              ][
+                ZERO
+              ]
+            }
+          }
+        }]
 MOD = Z[->f {
           ->m {
             ->n {
