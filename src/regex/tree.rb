@@ -13,4 +13,3 @@ p pattern
 
 p pattern.matches?("abaab")
 p pattern.matches?("abba")
-
