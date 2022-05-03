@@ -2,57 +2,44 @@ require "minitest/autorun"
 require_relative "../../src/lambda/syntax.rb"
 
 class LambdaCalculusTest < Minitest::Test
+  def setup
+    @one = LCFunction.new(:p,
+                          LCFunction.new(:x,
+                                         LCCall.new(LCVariable.new(:p), LCVariable.new(:x))))
+    @increment = LCFunction.new(
+      :n,
+      LCFunction.new(
+        :p,
+        LCFunction.new(
+          :x,
+          LCCall.new(
+            LCVariable.new(:p),
+            LCCall.new(
+              LCCall.new(LCVariable.new(:n),
+                         LCVariable.new(:p)),
+              LCVariable.new(:x),
+            )
+          )
+        )
+      )
+    )
+    @add =
+      LCFunction.new(:m,
+                     LCFunction.new(:n,
+                                    LCCall.new(LCCall.new(LCVariable.new(:n), @increment),
+                                               LCVariable.new(:m))))
+  end
+
   def test_one
-    one = LCFunction.new(:p,
-                         LCFunction.new(:x,
-                                        LCCall.new(LCVariable.new(:p), LCVariable.new(:x))))
-    assert_equal("-> p { -> x { p[x] } }", one.to_s)
+    assert_equal("-> p { -> x { p[x] } }", @one.to_s)
   end
 
   def test_increment
-    increment = LCFunction.new(
-      :n,
-      LCFunction.new(
-        :p,
-        LCFunction.new(
-          :x,
-          LCCall.new(
-            LCVariable.new(:p),
-            LCCall.new(
-              LCCall.new(LCVariable.new(:n),
-                         LCVariable.new(:p)),
-              LCVariable.new(:x),
-            )
-          )
-        )
-      )
-    )
-    assert_equal("-> n { -> p { -> x { p[n[p][x]] } } }", increment.to_s)
+    assert_equal("-> n { -> p { -> x { p[n[p][x]] } } }", @increment.to_s)
   end
 
   def test_add
-    increment = LCFunction.new(
-      :n,
-      LCFunction.new(
-        :p,
-        LCFunction.new(
-          :x,
-          LCCall.new(
-            LCVariable.new(:p),
-            LCCall.new(
-              LCCall.new(LCVariable.new(:n),
-                         LCVariable.new(:p)),
-              LCVariable.new(:x),
-            )
-          )
-        )
-      )
-    )
-    add =
-      LCFunction.new(:m,
-                     LCFunction.new(:n,
-                                    LCCall.new(LCCall.new(LCVariable.new(:n), increment), LCVariable.new(:m))))
-    assert_equal("-> m { -> n { n[-> n { -> p { -> x { p[n[p][x]] } } }][m] } }", add.to_s)
+    assert_equal("-> m { -> n { n[-> n { -> p { -> x { p[n[p][x]] } } }][m] } }", @add.to_s)
   end
 
   def test_expression
@@ -115,5 +102,24 @@ class LambdaCalculusTest < Minitest::Test
 
     c = LCCall.new(LCVariable.new(:x), LCVariable.new(:y))
     refute c.callable?
+  end
+
+  def test_reduce
+    expression = LCCall.new(LCCall.new(@add, @one), @one)
+    while expression.reducible?
+      expression = expression.reduce
+    end
+    # below return unexpected expression.
+    # but if both of each behave same, they are equivalent.
+    refute("-> p { -> x { p[p[x]] } }" == expression.to_s)
+
+    inc, zero = LCVariable.new(:inc), LCVariable.new(:zero)
+    expression = LCCall.new(LCCall.new(expression, inc), zero)
+    assert_equal("-> p { -> x { p[-> p { -> x { p[x] } }[p][x]] } }[inc][zero]",
+                 expression.to_s)
+    while expression.reducible?
+      expression = expression.reduce
+    end
+    assert_equal("inc[inc[zero]]", expression.to_s)
   end
 end
