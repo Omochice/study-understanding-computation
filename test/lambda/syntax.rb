@@ -105,4 +105,15 @@ class LambdaCalculusTest < Minitest::Test
     argument = LCFunction.new(:z, LCVariable.new(:z))
     assert_equal("-> y { -> z { z }[y] }", function.call(argument).to_s)
   end
+
+  def test_callable?
+    v = LCVariable.new(:x)
+    refute v.callable?
+
+    f = LCFunction.new(:x, LCVariable.new(:x))
+    assert f.callable?
+
+    c = LCCall.new(LCVariable.new(:x), LCVariable.new(:y))
+    refute c.callable?
+  end
 end
