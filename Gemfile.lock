@@ -2,8 +2,11 @@ GEM
   remote: https://rubygems.org/
   specs:
     minitest (5.15.0)
+    polyglot (0.3.5)
     rake (13.0.6)
     rufo (0.13.0)
+    treetop (1.6.11)
+      polyglot (~> 0.3)
 
 PLATFORMS
   x86_64-linux
@@ -12,6 +15,7 @@ DEPENDENCIES
   minitest (~> 5.15)
   rake (~> 13.0)
   rufo (~> 0.13.0)
+  treetop (~> 1.6)
 
 BUNDLED WITH
    2.2.22
