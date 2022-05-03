@@ -34,6 +34,17 @@ MOD = ->m {
       }][m]
   }
 }
+MOD = ->m {
+  ->n {
+    m[->x {
+        IF[IS_LESS_OR_EQUAL[n][x]][
+          SUBSTRACT[x][n]
+        ][
+          x
+        ]
+      }][m]
+  }
+}
 # MOD = Z[->f {
 #           ->m {
 #             ->n {
