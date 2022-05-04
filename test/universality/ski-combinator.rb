@@ -17,7 +17,10 @@ end
 
 class SKICallTest < Minitest::Test
   def setup
-    @expression = SKICall.new(SKICall.new(S, K), SKICall.new(I, SKISymbol.new(:x)))
+    @x = SKISymbol.new(:x)
+    @y = SKISymbol.new(:y)
+    @z = SKISymbol.new(:z)
+    @expression = SKICall.new(SKICall.new(S, K), SKICall.new(I, @x))
   end
 
   def test_to_s
@@ -26,6 +29,17 @@ class SKICallTest < Minitest::Test
 
   def test_inspect
     assert_equal("S[K][I[x]]", @expression.to_s)
+  end
+
+  def test_callable?
+    expression = SKICall.new(SKICall.new(@x, @y), @z)
+    refute expression.combinator.callable?(*expression.arguments)
+
+    expression = SKICall.new(SKICall.new(S, @x), @y)
+    refute expression.combinator.callable?(*expression.arguments)
+
+    expression = SKICall.new(SKICall.new(SKICall.new(S, @x), @y), @y)
+    assert expression.combinator.callable?(*expression.arguments)
   end
 end
 
