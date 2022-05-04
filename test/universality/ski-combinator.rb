@@ -39,3 +39,30 @@ class SKICombinatorTest < Minitest::Test
   def test_inspect
   end
 end
+
+class STest < Minitest::Test
+  def setup
+    @x = SKISymbol.new(:x)
+    @y = SKISymbol.new(:y)
+    @z = SKISymbol.new(:z)
+  end
+
+  def test_call
+    assert_equal("x[z][y[z]]", S.call(@x, @y, @z).to_s)
+  end
+
+  def test_left_right
+    expression = SKICall.new(SKICall.new(SKICall.new(S, @x), @y), @z)
+    combinator = expression.left.left.left
+    assert_equal("S", combinator.to_s)
+
+    first_arg = expression.left.left.right
+    assert_equal("x", first_arg.to_s)
+
+    second_arg = expression.left.right
+    assert_equal("y", second_arg.to_s)
+
+    third_arg = expression.right
+    assert_equal("z", third_arg.to_s)
+  end
+end
