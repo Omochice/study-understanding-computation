@@ -84,7 +84,7 @@ class STest < Minitest::Test
     combinator = expression.combinator
     refute combinator.callable?
 
-    arguments = expression.combinator
+    arguments = expression.arguments
     assert_equal([@y, @z], arguments)
 
     assert_raises do
