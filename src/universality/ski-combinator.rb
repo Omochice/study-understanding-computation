@@ -39,6 +39,9 @@ class SKICall < Struct.new(:left, :right)
 end
 
 class SKICombinator < SKISymbol
+  def callable?(*arguments)
+    return arguments.length == method(:call).arity
+  end
 end
 
 S, K, I = [:S, :K, :I].map { |name| SKICombinator.new(name) }
@@ -47,22 +50,10 @@ def S.call(a, b, c)
   return SKICall.new(SKICall.new(a, c), SKICall.new(b, c))
 end
 
-def S.callable?(*arguments)
-  return arguments.length == 3
-end
-
 def K.call(a, _b)
   return a
 end
 
-def K.callable?(*arguments)
-  return arguments.length == 2
-end
-
 def I.call(a)
   return a
-end
-
-def I.callable?(*arguments)
-  return arguments.length == 1
 end
