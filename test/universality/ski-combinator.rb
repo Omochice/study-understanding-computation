@@ -76,4 +76,19 @@ class STest < Minitest::Test
 
     assert_equal("x[z][y[z]]", combinator.call(*arguments).to_s)
   end
+
+  def test_not_combinator
+    # Leftest symbol is not combinator
+    expression = SKICall.new(SKICall.new(@x, @y), @z)
+    assert_equal("x[y][z]", expression.to_s)
+    combinator = expression.combinator
+    refute combinator.callable?
+
+    arguments = expression.combinator
+    assert_equal([@y, @z], arguments)
+
+    assert_raises do
+      combinator.call(*arguments)
+    end
+  end
 end
