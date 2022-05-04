@@ -60,6 +60,58 @@ class SKICallTest < Minitest::Test
       expression = expression.reduce
     end
   end
+
+  def test_as_a_function_of
+    original = SKICall.new(SKICall.new(S, K), I)
+    assert_equal("S[K][I]", original.to_s)
+    function = original.as_a_function_of(:x)
+    assert_equal("S[S[K[S]][K[K]]][K[I]]", function.to_s)
+    refute function.reducible?
+
+    expression = SKICall.new(function, @y)
+    assert_equal("S[S[K[S]][K[K]]][K[I]][y]", expression.to_s)
+    expecteds = [
+      "S[S[K[S]][K[K]]][K[I]][y]",
+      "S[K[S]][K[K]][y][K[I][y]]",
+      "K[S][y][K[K][y]][K[I][y]]",
+      "S[K[K][y]][K[I][y]]",
+      "S[K][K[I][y]]",
+      "S[K][I]",
+    ]
+    assert expression.reducible?
+    while expression.reducible?
+      expected = expecteds.shift
+      assert_equal(expected, expression.to_s)
+      expression = expression.reduce
+    end
+
+    assert_equal(original, expression)
+  end
+
+  def test_as_a_function_of_include_name
+    original = SKICall.new(SKICall.new(S, @x), I)
+    assert_equal("S[x][I]", original.to_s)
+    function = original.as_a_function_of(:x)
+    assert_equal("S[S[K[S]][I]][K[I]]", function.to_s)
+    expression = SKICall.new(function, @y)
+    assert_equal("S[S[K[S]][I]][K[I]][y]", expression.to_s)
+
+    expecteds = [
+      "S[S[K[S]][I]][K[I]][y]",
+      "S[K[S]][I][y][K[I][y]]",
+      "K[S][y][I[y]][K[I][y]]",
+      "S[I[y]][K[I][y]]",
+      "S[y][K[I][y]]",
+      "S[y][I]",
+    ]
+
+    assert expression.reducible?
+    while expression.reducible?
+      expected = expecteds.shift
+      assert_equal(expected, expression.to_s)
+      expression = expression.reduce
+    end
+  end
 end
 
 class SKICombinatorTest < Minitest::Test
