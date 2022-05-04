@@ -18,6 +18,10 @@ class SKISymbol < Struct.new(:name)
   def callable?(*_arguments)
     return false
   end
+
+  def reducible?
+    return false
+  end
 end
 
 class SKICall < Struct.new(:left, :right)
@@ -35,6 +39,20 @@ class SKICall < Struct.new(:left, :right)
 
   def arguments
     return self.left.arguments + [self.right]
+  end
+
+  def reducible?
+    return self.left.reducible? || self.right.reducible? || combinator().callable?(*arguments())
+  end
+
+  def reduce
+    if left.reducible?
+      return SKICall.new(self.left.reduce(), self.right)
+    elsif right.reducible?
+      return SKICall.new(self.left, self.right.reduce())
+    else
+      return combinator.call(*arguments())
+    end
   end
 end
 

@@ -41,6 +41,25 @@ class SKICallTest < Minitest::Test
     expression = SKICall.new(SKICall.new(SKICall.new(S, @x), @y), @z)
     assert expression.combinator.callable?(*expression.arguments)
   end
+
+  def test_reduce
+    swap = SKICall.new(SKICall.new(S, SKICall.new(K, SKICall.new(S, I))), K)
+    expression = SKICall.new(SKICall.new(swap, @x), @y)
+    # puts expression.reducible?
+    expecteds = [
+      "S[K[S[I]]][K][x][y]",
+      "K[S[I]][x][K[x]][y]",
+      "S[I][K[x]][y]",
+      "I[y][K[x][y]]",
+      "y[K[x][y]]",
+      "y[x]",
+    ]
+    while expression.reducible?
+      expected = expecteds.shift
+      assert_equal(expected, expression.to_s)
+      expression = expression.reduce
+    end
+  end
 end
 
 class SKICombinatorTest < Minitest::Test
