@@ -2,7 +2,7 @@
 
 # study-understanding-computation
 
-This repo is for my studing [Understanding Computation](https://www.oreilly.com/library/view/understanding-computation/9781449330071/).
+This repo is for my studying [Understanding Computation](https://www.oreilly.com/library/view/understanding-computation/9781449330071/).
 
 ## Links
 
