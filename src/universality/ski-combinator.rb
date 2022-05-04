@@ -41,7 +41,7 @@ end
 class SKICombinator < SKISymbol
 end
 
-S, K, I = [:S, :K, :I].map { |name| SKISymbol.new(name) }
+S, K, I = [:S, :K, :I].map { |name| SKICombinator.new(name) }
 
 def S.call(a, b, c)
   return SKICall.new(SKICall.new(a, c), SKICall.new(b, c))
