@@ -1,6 +1,7 @@
 require "minitest/autorun"
 require "treetop"
 require_relative "../../src/lambda/syntax.rb"
+require_relative "../../src/universality/ski-combinator.rb"
 
 class LambdaCalculusToSKiTest < Minitest::Test
   def setup
@@ -17,9 +18,21 @@ class LambdaCalculusToSKiTest < Minitest::Test
     pattern = "-> p { -> x { p[p[x]] } }"
     parser = LambdaCalculusParser.new
     ast = parser.parse(pattern).to_ast
+    two = ast.to_ski
+    expected = "S[S[K[S]][S[K[K]][I]]][S[S[K[S]][S[K[K]][I]]][K[I]]]"
     assert_equal(pattern, ast.to_s)
-    assert_equal("S[S[K[S]][S[K[K]][I]]][S[S[K[S]][S[K[K]][I]]][K[I]]]",
-                 ast.to_ski.to_s)
+    assert_equal(expected, two.to_s)
+
+    inc = SKISymbol.new(:inc)
+    zero = SKISymbol.new(:zero)
+    expression = SKICall.new(SKICall.new(two, inc), zero)
+    assert_equal(expected + "[inc][zero]", expression.to_s)
+    assert expression.reducible?
+    # too long to write all step
+    # maybe it ok if accept last case
+    while expression.reducible?
+      expression = expression.reduce
+    end
+    assert_equal("inc[inc[zero]]", expression.to_s)
   end
 end
-
