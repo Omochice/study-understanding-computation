@@ -65,4 +65,15 @@ class STest < Minitest::Test
     third_arg = expression.right
     assert_equal("z", third_arg.to_s)
   end
+
+  def test_combinator
+    expression = SKICall.new(SKICall.new(SKICall.new(S, @x), @y), @z)
+    combinator = expression.combinator
+    assert_equal("S", combinator.to_s)
+
+    arguments = expression.arguments
+    assert_equal([@x, @y, @z], arguments)
+
+    assert_equal("x[z][y[z]]", combinator.call(*arguments).to_s)
+  end
 end
