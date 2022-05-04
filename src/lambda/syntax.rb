@@ -1,3 +1,5 @@
+require_relative "../universality/ski-combinator.rb"
+
 class LCVariable < Struct.new(:name)
   def to_s
     return self.name.to_s
@@ -21,6 +23,10 @@ class LCVariable < Struct.new(:name)
 
   def reducible?
     return false
+  end
+
+  def to_ski
+    return SKISymbol.new(self.name)
   end
 end
 
@@ -51,6 +57,10 @@ class LCFunction < Struct.new(:parameter, :body)
 
   def reducible?
     return false
+  end
+
+  def to_ski
+    return self.body.to_ski.as_a_function_of(self.parameter)
   end
 end
 
@@ -84,5 +94,9 @@ class LCCall < Struct.new(:left, :right)
     else
       return self.left.call(self.right)
     end
+  end
+
+  def to_ski
+    return SKICall.new(self.left.to_ski, self.right.to_ski)
   end
 end
