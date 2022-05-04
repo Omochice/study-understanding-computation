@@ -38,7 +38,7 @@ class SKICallTest < Minitest::Test
     expression = SKICall.new(SKICall.new(S, @x), @y)
     refute expression.combinator.callable?(*expression.arguments)
 
-    expression = SKICall.new(SKICall.new(SKICall.new(S, @x), @y), @y)
+    expression = SKICall.new(SKICall.new(SKICall.new(S, @x), @y), @z)
     assert expression.combinator.callable?(*expression.arguments)
   end
 end
