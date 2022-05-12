@@ -7,6 +7,10 @@ class SKISymbol < Struct.new(:name)
     return to_s
   end
 
+  def to_iota
+    return self
+  end
+
   def combinator
     return self
   end
@@ -92,4 +96,21 @@ end
 
 def I.call(a)
   return a
+end
+
+IOTA = SKICombinator.new("ι")
+def IOTA.call(a)
+  return SKICall.new(SKICall.new(a, S), K)
+end
+
+def S.to_iota
+  return SKICall.new(IOTA, SKICall.new(IOTA, SKICall.new(IOTA, SKICall.new(IOTA, IOTA))))
+end
+
+def K.to_iota
+  return SKICall.new(IOTA, SKICall.new(IOTA, SKICall.new(IOTA, IOTA)))
+end
+
+def I.to_iota
+  return SKICall.new(IOTA, IOTA)
 end

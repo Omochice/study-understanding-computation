@@ -177,3 +177,47 @@ class STest < Minitest::Test
     end
   end
 end
+
+class IOTATest < Minitest::Test
+  def nested_iota(n)
+    if n == 0
+      return ""
+    elsif n == 1
+      return "ι"
+    else
+      return "ι[#{nested_iota(n - 1)}]"
+    end
+  end
+
+  def test_s_to_iota
+    actual = S.to_iota
+    assert_equal(nested_iota(5), actual.to_s)
+
+    while actual.reducible?
+      actual = actual.reduce
+    end
+    assert_equal(S, actual)
+  end
+
+  def test_k_to_iota
+    actual = K.to_iota
+    assert_equal(nested_iota(4), actual.to_s)
+
+    while actual.reducible?
+      actual = actual.reduce
+    end
+    assert_equal(K, actual)
+  end
+
+  def test_i_to_iota
+    actual = I.to_iota
+    assert_equal(nested_iota(2), actual.to_s)
+
+    while actual.reducible?
+      actual = actual.reduce
+    end
+    # S[K][K[K]] act equaly "I"
+    expected = SKICall.new(SKICall.new(S, K), SKICall.new(K, K))
+    assert_equal(expected, actual)
+  end
+end
