@@ -36,3 +36,27 @@ class CyclicTagRuleBook < Struct.new(:rules)
     end
   end
 end
+
+class CyclicTagEncoder < Struct.new(:alphabet)
+  def encode_string(string)
+    return string.chars.map { |character| encode_character(character) }.join
+  end
+
+  def encode_character(character)
+    character_position = alphabet.index(character)
+    return (0...alphabet.length).map { |n| n == character_position ? "1" : "0" }.join
+  end
+end
+
+# TODO: stop monkey patch
+class TagRule
+  def to_cyclic(encoder)
+    return CyclicTagRule.new(encoder.encode_string(self.append_characters))
+  end
+end
+
+class TagSystem
+  def encoder
+    return CyclicTagEncoder.new(self.alphabet)
+  end
+end

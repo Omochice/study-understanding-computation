@@ -139,3 +139,4 @@ class TagSystemTest < Minitest::Test
     assert_equal(["a", "b", "c", "d"], system.alphabet)
   end
 end
+
