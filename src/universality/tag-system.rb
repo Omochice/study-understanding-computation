@@ -6,6 +6,10 @@ class TagRule < Struct.new(:first_character, :append_characters)
   def follow(string)
     return string + self.append_characters
   end
+
+  def alphabet
+    return ([self.first_character] + self.append_characters.chars.entries).uniq
+  end
 end
 
 class TagRuleBook < Struct.new(:deletion_number, :rules)
@@ -20,6 +24,10 @@ class TagRuleBook < Struct.new(:deletion_number, :rules)
   def applies_to?(string)
     return !rule_for(string).nil? && string.length >= self.deletion_number
   end
+
+  def alphabet
+    return rules.flat_map(&:alphabet).uniq
+  end
 end
 
 class TagSystem < Struct.new(:current_string, :rulebook)
@@ -29,9 +37,13 @@ class TagSystem < Struct.new(:current_string, :rulebook)
 
   def run
     while self.rulebook.applies_to?(current_string)
-      yield current_string
+      yield self.current_string
       step
     end
-    yield current_string
+    yield self.current_string
+  end
+
+  def alphabet
+    return (self.rulebook.alphabet + self.current_string.chars.entries).uniq.sort
   end
 end
