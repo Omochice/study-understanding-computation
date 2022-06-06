@@ -59,4 +59,31 @@ class TagSystem
   def encoder
     return CyclicTagEncoder.new(self.alphabet)
   end
+
+  def to_cyclic
+    return TagSystem.new(encoder.encode_string(current_string), rulebook.to_cyclic)
+  end
+end
+
+class TagRuleBook
+  def cyclic_rules(encoder)
+    return encoder.alphabet.map { |character| cyclic_rule_for(character, encoder) }
+  end
+
+  def cyclic_rule_for(character, encoder)
+    rule = rule_for(character)
+    if rule.nil?
+      return CyclicTagRule.new("")
+    else
+      return rule.to_cyclic(encoder)
+    end
+  end
+
+  def cyclic_padding_rules(encoder)
+    return Array.new(encoder.alphabet.length, CyclicTagRule.new("")) * (deletion_number -1)
+  end
+
+  def to_cyclic(encoder)
+    return CyclicTagRuleBook.new(cyclic_rules(encoder) + cyclic_padding_rules(encoder))
+  end
 end
