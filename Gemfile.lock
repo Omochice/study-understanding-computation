@@ -5,7 +5,7 @@ GEM
     polyglot (0.3.5)
     rake (13.1.0)
     rufo (0.16.3)
-    treetop (1.6.11)
+    treetop (1.6.12)
       polyglot (~> 0.3)
 
 PLATFORMS
