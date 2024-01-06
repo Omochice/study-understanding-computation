@@ -10,6 +10,6 @@ gem "rake", "~> 13.0"
 
 gem "minitest", "~> 5.15"
 
-gem "rufo", "~> 0.16.0"
+gem "rufo", "~> 0.17.0"
 
 gem "treetop", "~> 1.6"
